@@ -1,5 +1,6 @@
 using Credit_Management_System.Data;
 using Credit_Management_System.Entities;
+using Credit_Management_System.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,14 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    await DbInitializer.SeedRolesAsync(services);
+//}
+
 
 app.Run();
+

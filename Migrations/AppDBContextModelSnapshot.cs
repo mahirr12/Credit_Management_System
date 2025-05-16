@@ -476,6 +476,13 @@ namespace Credit_Management_System.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Credit_Management_System.Entities.Admin", b =>
+                {
+                    b.HasBaseType("Credit_Management_System.Entities.User");
+
+                    b.HasDiscriminator().HasValue("Admin");
+                });
+
             modelBuilder.Entity("Credit_Management_System.Entities.Customer", b =>
                 {
                     b.HasBaseType("Credit_Management_System.Entities.User");

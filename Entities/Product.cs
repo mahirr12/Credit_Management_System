@@ -12,6 +12,7 @@ namespace Credit_Management_System.Entities
 
         public decimal Price { get; set; }
 
+        [Required]
         public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
 

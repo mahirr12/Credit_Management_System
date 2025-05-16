@@ -10,6 +10,7 @@ namespace Credit_Management_System.Data
 
         public DbSet<Merchant> Merchants { get; set; }
         public DbSet<Branch> Branches { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
