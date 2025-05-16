@@ -1,6 +1,9 @@
 using Credit_Management_System.Data;
 using Credit_Management_System.Entities;
-using Credit_Management_System.Helpers;
+using Credit_Management_System.Repositories.Implementations;
+using Credit_Management_System.Repositories.Interfaces;
+using Credit_Management_System.Services.Implementations;
+using Credit_Management_System.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +26,14 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 )
     .AddEntityFrameworkStores<AppDBContext>()
     .AddDefaultTokenProviders();
+
+//Repos
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
+
+//Services
+builder.Services.AddScoped<IMerchantService, MerchantService>();
+
 
 builder.Services.AddControllersWithViews();
 
