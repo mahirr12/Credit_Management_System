@@ -30,6 +30,7 @@ namespace Credit_Management_System.Services.Implementations
             await _merchantRepo.SaveChangesAsync();
             return true;
         }
+
         public async Task<List<MerchantVM>> GetAllAsync()
         {
             var merchants = await _merchantRepo.GetAllWithIncludeAsync();
@@ -37,9 +38,9 @@ namespace Credit_Management_System.Services.Implementations
             {
                 Id = m.Id,
                 Name = m.Name,
-                BranchIds = m.Branches?.Select(b => b.Id).ToList()
+                BranchIds = [.. m.Branches.Select(b => b.Id)]
             });
-            return merchantVMs.ToList();
+            return [.. merchantVMs];
         }
         public async Task<MerchantVM?> GetByIdAsync(int id)
         {
@@ -50,7 +51,7 @@ namespace Credit_Management_System.Services.Implementations
             {
                 Id = merchant.Id,
                 Name = merchant.Name,
-                BranchIds = merchant.Branches?.Select(b => b.Id).ToList()
+                BranchIds = [.. merchant.Branches.Select(b => b.Id)]
             };
             return merchantVM;
         }

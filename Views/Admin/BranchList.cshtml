@@ -1,6 +1,7 @@
-﻿@model List<MerchantVM>
+﻿@model List<BranchVM>
 @{
-    var merchantVM = new MerchantVM();
+    var branchVM = new BranchVM();
+    List<SelectListItem> merchants = ViewBag.Merchants;
 }
 <div class="container">
     <div class="page-inner">
@@ -52,7 +53,7 @@
                                     <div class="modal-header border-0">
                                         <h5 class="modal-title">
                                             <span class="fw-mediumbold"> New</span>
-                                            <span class="fw-light"> Merchant </span>
+                                            <span class="fw-light"> Branch </span>
                                         </h5>
                                         <button type="button"
                                                 class="close"
@@ -61,22 +62,37 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form asp-action="CreateMerchant" method="post" asp-route-vm="merchant">
+                                    <form asp-action="CreateBranch" method="post" asp-route-vm="branch">
                                         <div class="modal-body">
                                             <p class="small">
-                                                Add new merchant
+                                                Add new branch
                                             </p>
 
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
                                                         <label>Name</label>
-                                                        <input asp-for="@merchantVM.Name"
+                                                        <input asp-for="@branchVM.Name"
                                                                type="text"
                                                                class="form-control"
                                                                placeholder="Enter name" />
                                                     </div>
-                                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                                    <div asp-validation-for="Name" class="text-danger"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group form-group-default">
+                                                        <div class="form-group">
+                                                            <label asp-for="@branchVM.MerchantId">Select merchant</label>
+                                                            <select asp-for="@branchVM.MerchantId"
+                                                                    asp-items="@merchants"
+                                                                    class="form-select">
+                                                                <option value="">-- Select Merchant --</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div asp-validation-for="MerchantId" class="text-danger"></div>
                                                 </div>
                                             </div>
 
@@ -90,7 +106,7 @@
                                             <button type="button"
                                                     class="btn btn-danger"
                                                     data-bs-dismiss="modal">
-                                                Close
+                                                Cancel
                                             </button>
                                         </div>
                                     </form>
@@ -105,7 +121,8 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Number of branches</th>
+                                        <th>Merchant</th>
+                                        <th>Staff</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
@@ -113,7 +130,8 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Office</th>
+                                        <th>Merchant</th>
+                                        <th>Staff</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -123,7 +141,8 @@
                                         <tr>
                                             <td>@m.Id</td>
                                             <td>@m.Name</td>
-                                            <td>@m.BranchIds.Count</td>
+                                            <td>@merchants.Find(me=>me.Value == m.MerchantId.ToString())?.Text.ToString()</td>
+                                            <td>@m.EmployeeIds.Count</td>
                                             <td class="align-middle">
                                                 <div class="form-button-action d-flex align-items-center">
                                                     <button type="button"
@@ -156,9 +175,9 @@
                                                 </div>
                                             </td>
                                         </tr>
-
                                     }
-                                </tbody>
+ 
+                               </tbody>
                             </table>
                         </div>
                     </div>
@@ -174,10 +193,6 @@
             // Add Row
           $("#add-row").DataTable({
             pageLength: 5,
-          });
-
-          $("#addRowButton").click(function () {
-            $("#addRowModal").modal("hide");
           });
         });
     </script>

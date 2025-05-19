@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Credit_Management_System.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250514164733_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250518215039_fix")]
+    partial class fix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,16 +100,12 @@ namespace Credit_Management_System.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomerId1")
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmployeeId1")
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -123,9 +119,9 @@ namespace Credit_Management_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Loans");
                 });
@@ -479,6 +475,13 @@ namespace Credit_Management_System.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Credit_Management_System.Entities.Admin", b =>
+                {
+                    b.HasBaseType("Credit_Management_System.Entities.User");
+
+                    b.HasDiscriminator().HasValue("Admin");
+                });
+
             modelBuilder.Entity("Credit_Management_System.Entities.Customer", b =>
                 {
                     b.HasBaseType("Credit_Management_System.Entities.User");
@@ -525,12 +528,16 @@ namespace Credit_Management_System.Migrations
             modelBuilder.Entity("Credit_Management_System.Entities.Loan", b =>
                 {
                     b.HasOne("Credit_Management_System.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId1");
+                        .WithMany("Loans")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Credit_Management_System.Entities.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId1");
+                        .WithMany("Loans")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
@@ -680,6 +687,16 @@ namespace Credit_Management_System.Migrations
             modelBuilder.Entity("Credit_Management_System.Entities.Product", b =>
                 {
                     b.Navigation("LoanItems");
+                });
+
+            modelBuilder.Entity("Credit_Management_System.Entities.Customer", b =>
+                {
+                    b.Navigation("Loans");
+                });
+
+            modelBuilder.Entity("Credit_Management_System.Entities.Employee", b =>
+                {
+                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }

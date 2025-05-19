@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Credit_Management_System.Entities
 {
@@ -11,6 +10,6 @@ namespace Credit_Management_System.Entities
         public int MerchantId { get; set; }
         public Merchant Merchant { get; set; } = null!;
 
-        public ICollection<Employee> Employees { get; set; } = new Collection<Employee>();
+        public ICollection<Employee> Employees { get; set; } = [];
     }
 }

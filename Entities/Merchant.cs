@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.VisualBasic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Credit_Management_System.Entities
 {
@@ -7,6 +9,6 @@ namespace Credit_Management_System.Entities
         [Required, StringLength(50)]
         public string Name { get; set; } = null!;
 
-        public ICollection<Branch>? Branches { get; set; }
+        public ICollection<Branch> Branches { get; set; } = [];
     }
 }

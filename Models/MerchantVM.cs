@@ -5,8 +5,8 @@ namespace Credit_Management_System.Models
     public class MerchantVM
     {
         public int Id { get; set; }
-        [Required]
+        [Required, StringLength(50)]
         public string Name { get; set; } = null!;
-        public List<int>? BranchIds { get; set; }
+        public List<int> BranchIds { get; set; } = [];
     }
 }

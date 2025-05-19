@@ -12,6 +12,7 @@ namespace Credit_Management_System.Services.Implementations
         public ProductService(IGenericRepository<Product> productRepo)
         {
             _productRepo = productRepo;
+
         }
 
         public Task CreateAsync(ProductVM model)

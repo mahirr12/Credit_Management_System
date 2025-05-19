@@ -1,5 +1,6 @@
 using Credit_Management_System.Data;
 using Credit_Management_System.Entities;
+using Credit_Management_System.Helpers;
 using Credit_Management_System.Repositories.Implementations;
 using Credit_Management_System.Repositories.Interfaces;
 using Credit_Management_System.Services.Implementations;
@@ -30,10 +31,11 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 //Repos
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
+builder.Services.AddScoped<IBranchRepository, BranchRepository>();
 
 //Services
 builder.Services.AddScoped<IMerchantService, MerchantService>();
-
+builder.Services.AddScoped<IBranchService, BranchService>();
 
 builder.Services.AddControllersWithViews();
 
@@ -60,11 +62,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    await DbInitializer.SeedRolesAsync(services);
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await DbInitializer.SeedRolesAsync(services);
+}
 
 
 app.Run();

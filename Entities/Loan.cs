@@ -2,10 +2,10 @@
 {
     public class Loan:BaseEntity
     {
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; } = null!;
         public Customer Customer { get; set; } = null!;
 
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; } = null!;
         public Employee Employee { get; set; } = null!;
 
         public DateTime IssueDate { get; set; }

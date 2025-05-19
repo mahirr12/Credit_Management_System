@@ -20,7 +20,7 @@ namespace Credit_Management_System.Helpers
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
-            string adminEmail = "mahir.cumaliyev@icloud.com";
+            string adminEmail = "admin@admin.com";
             string adminPassword = "Admin123";
 
             if (await userManager.FindByEmailAsync(adminEmail) == null)
@@ -38,6 +38,7 @@ namespace Credit_Management_System.Helpers
                     await userManager.AddToRoleAsync(adminUser, "Admin");
                 }
             }
+
         }
     }
 }

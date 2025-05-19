@@ -6,6 +6,6 @@ namespace Credit_Management_System.Entities
     {
         [Required]
         public string CustomerId { get; set; } = null!;
-        
+        public ICollection<Loan> Loans { get; set; } = [];
     }
 }

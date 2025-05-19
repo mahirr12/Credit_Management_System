@@ -23,9 +23,22 @@ namespace Credit_Management_System.Data
 
         public DbSet<Payment> Payments { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Loan>()
+                .HasOne(l => l.Customer)
+                .WithMany(c => c.Loans) 
+                .HasForeignKey(l => l.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            modelBuilder.Entity<Loan>()
+                .HasOne(l => l.Employee)
+                .WithMany(e => e.Loans) 
+                .HasForeignKey(l => l.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict); 
         }
+
     }
 }
