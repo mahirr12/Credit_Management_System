@@ -28,7 +28,7 @@ namespace Credit_Management_System.Services.Implementations
             await _categoryRepo.SaveChangesAsync();
             return true;
         }
-        public async Task<IEnumerable<CategoryVM>> GetAllAsync()
+        public async Task<List<CategoryVM>> GetAllAsync()
         {
             var categories = await _categoryRepo.GetAllAsync();
             var categoryVMs = categories.Select(c => new CategoryVM

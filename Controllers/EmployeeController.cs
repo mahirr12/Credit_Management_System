@@ -33,6 +33,7 @@ namespace Credit_Management_System.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateCategory()
         {
+            
             var model = new CategoryVM()
             {
                 ParentCategories = await _categoryService.GetCategorySelectListAsync()
@@ -55,7 +56,7 @@ namespace Credit_Management_System.Controllers
         {
             var category = await _categoryService.GetByIdAsync(id);
             if (category == null) return NotFound();
-
+            category.ParentCategories = await _categoryService.GetCategorySelectListAsync();
             return View(category);
         }
         [HttpPost]

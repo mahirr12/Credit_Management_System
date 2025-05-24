@@ -1,0 +1,98 @@
+﻿@model CategoryVM
+@{
+    Model.ParentCategories.RemoveAll(x => x.Value == Model.Id.ToString());
+}
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Forms</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="~/#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="~/#">Merchant</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="~/#">Add Merchant</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <form asp-action="UpdateCategory" method="post">
+                        <div class="card-header">
+                            <div class="card-title">Update Category</div>
+                        </div>
+                        <div class="card-body">
+                            <div asp-validation-for="Name" class="text-danger"></div>
+                            <div class="form-group form-inline">
+                                <label asp-for="Title"
+                                       class="col-md-3 col-form-label">Enter branch's name</label>
+                                <div class="col-md-9 p-0">
+                                    <input asp-for="Title"
+                                           type="text"
+                                           class="form-control input-full"
+                                           placeholder="Category's title" />
+                                </div>
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-inline">
+                                <label asp-for="ParentCategoryId">Select parent category</label>
+                                <select id="categorySelect" asp-for="ParentCategoryId" class="form-control select2" asp-items="@Model.ParentCategories">
+                                    <option value="">-- Select parent category --</option>
+                                </select>
+
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       value=""
+                                       id="disableCheckbox" />
+                                <label class="form-check-label"
+                                       for="disableCheckbox">
+                                    Root category
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('.select2').select2({
+                placeholder: "Select parent category",
+                allowClear: true
+            });
+
+
+            $('#disableCheckbox').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $('#categorySelect').prop('disabled', true);
+                    $('#categorySelect').val(null).trigger('change');
+                } else {
+                    $('#categorySelect').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
+

@@ -36,7 +36,7 @@ namespace Credit_Management_System.Controllers
                 }
                 else if (roles.Contains("Employee"))
                 {
-                    return RedirectToAction("Index", "User");
+                    return RedirectToAction("Index", "Employee");
                 }
                 else if (roles.Contains("Customer"))
                 {
