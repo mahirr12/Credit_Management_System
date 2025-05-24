@@ -1,7 +1,7 @@
 ﻿@model List<BranchVM>
 @{
     var branchVM = new BranchVM();
-    List<SelectListItem> merchants = ViewBag.Merchants;
+    branchVM.Merchants = ViewBag.Merchants;
 }
 <div class="container">
     <div class="page-inner">
@@ -37,7 +37,7 @@
                                     data-bs-toggle="modal"
                                     data-bs-target="#addRowModal">
                                 <i class="fa fa-plus"></i>
-                                Add Merchant
+                                Add Branch
                             </button>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                                                                class="form-control"
                                                                placeholder="Enter name" />
                                                     </div>
-                                                    <div asp-validation-for="Name" class="text-danger"></div>
+                                                    <span asp-validation-for="@branchVM.Name" class="text-danger"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -86,20 +86,19 @@
                                                         <div class="form-group">
                                                             <label asp-for="@branchVM.MerchantId">Select merchant</label>
                                                             <select asp-for="@branchVM.MerchantId"
-                                                                    asp-items="@merchants"
+                                                                    asp-items="@branchVM.Merchants"
                                                                     class="form-select">
-                                                                <option value="">-- Select Merchant --</option>
+                                                                <option value="" hidden>-- Select Merchant --</option>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div asp-validation-for="MerchantId" class="text-danger"></div>
+                                                        <span asp-validation-for="@branchVM.MerchantId" class="text-danger" />
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="modal-footer border-0">
                                             <button type="submit"
-                                                    id="addRowButton"
                                                     class="btn btn-primary">
                                                 Add
                                             </button>
@@ -141,7 +140,7 @@
                                         <tr>
                                             <td>@m.Id</td>
                                             <td>@m.Name</td>
-                                            <td>@merchants.Find(me=>me.Value == m.MerchantId.ToString())?.Text.ToString()</td>
+                                            <td>@branchVM.Merchants.Find(me => me.Value == m.MerchantId.ToString())?.Text.ToString()</td>
                                             <td>@m.EmployeeIds.Count</td>
                                             <td class="align-middle">
                                                 <div class="form-button-action d-flex align-items-center">
@@ -152,7 +151,7 @@
                                                             data-original-title="View Details">
                                                         <i class="fa fa-info-circle"></i>
                                                     </button>
-                                                    <a asp-action="UpdateMerchant"
+                                                    <a asp-action="UpdateBranch"
                                                        asp-route-id="@m.Id"
                                                        method="get"
                                                        type="button"
@@ -162,7 +161,7 @@
                                                        data-original-title="Edit Task">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <form asp-action="DeleteMerchant" asp-controller="Admin" method="post" style="display:inline-block; margin:0; padding:0;">
+                                                    <form asp-action="DeleteBranch" asp-controller="Admin" method="post" style="display:inline-block; margin:0; padding:0;">
                                                         <input type="hidden" name="Id" value="@m.Id" />
                                                         <button type="submit"
                                                                 data-bs-toggle="tooltip"
@@ -176,8 +175,8 @@
                                             </td>
                                         </tr>
                                     }
- 
-                               </tbody>
+
+                                </tbody>
                             </table>
                         </div>
                     </div>

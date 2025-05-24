@@ -18,9 +18,11 @@ namespace Credit_Management_System.Services.Implementations
 
         public async Task CreateAsync(BranchVM branchVM)
         {
+            var merchant = await _merchantRepo.GetByIdAsync(branchVM.MerchantId);
+            if (merchant == null) throw new Exception("Merchant not found");
             var branch = new Branch
             {
-                Name = branchVM.Name,
+                Name = branchVM.Name.Trim(),
                 MerchantId = branchVM.MerchantId
             };
             await _branchRepo.AddAsync(branch);
@@ -64,7 +66,7 @@ namespace Credit_Management_System.Services.Implementations
         {
             var branch = await _branchRepo.GetByIdAsync(branchVM.Id);
             if (branch == null) return false;
-            branch.Name = branchVM.Name;
+            branch.Name = branchVM.Name.Trim();
             branch.MerchantId = branchVM.MerchantId;
             _branchRepo.Update(branch);
             await _branchRepo.SaveChangesAsync();
@@ -81,5 +83,16 @@ namespace Credit_Management_System.Services.Implementations
             return selectList;
         }
 
+        public async Task<List<SelectListItem>> GetBranchesSelectListAsync()
+        {
+            var branches = await _branchRepo.GetAllWithIncludeAsync();
+            var selectList = branches.Select(b => new SelectListItem
+            {
+                Value = b.Id.ToString(),
+                Text = b.Merchant.Name + " " + b.Name
+            }).ToList();
+            return selectList;
+
+        }
     }
 }

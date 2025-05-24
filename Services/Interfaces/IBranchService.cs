@@ -11,5 +11,6 @@ namespace Credit_Management_System.Services.Interfaces
         Task<bool> UpdateAsync(BranchVM branchVM);
         Task<bool> DeleteAsync(int id);
         Task<List<SelectListItem>> GetMerchantsSelectListAsync();
+        Task<List<SelectListItem>> GetBranchesSelectListAsync();
     }
 }

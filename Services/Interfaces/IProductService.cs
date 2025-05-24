@@ -5,10 +5,10 @@ namespace Credit_Management_System.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductVM>> GetAllAsync();
         Task<ProductVM?> GetByIdAsync(int id);
-        Task CreateAsync(ProductVM model);
-        Task UpdateAsync(ProductVM model);
-        Task DeleteAsync(int id);
+        Task<IEnumerable<ProductVM>> GetAllAsync();
+        Task CreateAsync(ProductVM productVM);
+        Task<bool> UpdateAsync(ProductVM productVM);
+        Task<bool> DeleteAsync(int id);
     }
 }

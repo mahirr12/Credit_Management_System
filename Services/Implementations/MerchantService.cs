@@ -16,7 +16,7 @@ namespace Credit_Management_System.Services.Implementations
         {
             var merchant = new Merchant
             {
-                Name = merchantVM.Name
+                Name = merchantVM.Name.Trim(),
             };
             await _merchantRepo.AddAsync(merchant);
             await _merchantRepo.SaveChangesAsync();
@@ -60,7 +60,7 @@ namespace Credit_Management_System.Services.Implementations
             var merchant = await _merchantRepo.GetByIdAsync(merchantVM.Id);
             if (merchant == null) return false;
 
-            merchant.Name = merchantVM.Name;
+            merchant.Name = merchantVM.Name.Trim();
 
             _merchantRepo.Update(merchant);
             await _merchantRepo.SaveChangesAsync();

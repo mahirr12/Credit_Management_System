@@ -76,14 +76,12 @@
                                                                class="form-control"
                                                                placeholder="Enter name" />
                                                     </div>
-                                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                                    <span asp-validation-for="@merchantVM.Name" class="text-danger"></span>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="modal-footer border-0">
                                             <button type="submit"
-                                                    id="addRowButton"
                                                     class="btn btn-primary">
                                                 Add
                                             </button>
@@ -105,7 +103,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Number of branches</th>
+                                        <th style="width: 15%">Branches</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                 </thead>
@@ -113,7 +111,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Office</th>
+                                        <th>Branches</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -123,7 +121,9 @@
                                         <tr>
                                             <td>@m.Id</td>
                                             <td>@m.Name</td>
-                                            <td>@m.BranchIds.Count</td>
+                                            <td>
+                                                @m.BranchIds.Count
+                                            </td>
                                             <td class="align-middle">
                                                 <div class="form-button-action d-flex align-items-center">
                                                     <button type="button"

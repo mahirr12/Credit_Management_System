@@ -19,7 +19,7 @@ namespace Credit_Management_System.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Index()
         {
             if (User.Identity?.IsAuthenticated == true)
             {
@@ -49,14 +49,14 @@ namespace Credit_Management_System.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginVM model)
+        public async Task<IActionResult> Index(LoginVM model)
         {
             if (!ModelState.IsValid) return View(model);
 
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                ModelState.AddModelError("", "User not found.");
+                ModelState.AddModelError("Email", "User not found.");
                 return View(model);
             }
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
@@ -70,7 +70,7 @@ namespace Credit_Management_System.Controllers
                 }
                 else if (roles.Contains("Employee"))
                 {
-                    return RedirectToAction("Index", "User");
+                    return RedirectToAction("Index", "Employee");
                 }
                 else if (roles.Contains("Customer"))
                 {
@@ -81,7 +81,7 @@ namespace Credit_Management_System.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            ModelState.AddModelError("", "Password is incorrect.");
+            ModelState.AddModelError("Password", "Password is incorrect.");
             return View(model);
         }
 
@@ -89,7 +89,7 @@ namespace Credit_Management_System.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Account");
         }
     }
 }

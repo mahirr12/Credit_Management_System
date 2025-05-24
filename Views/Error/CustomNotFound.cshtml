@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Not found";
-    var returnUrl = Context.Request.Headers["Referer"].ToString();
+    var referer = Context.Request.Headers["Referer"].ToString();
+    string returnUrl = string.IsNullOrEmpty(referer) ? "/" : referer;
+
 }
 
 <style>

@@ -27,6 +27,8 @@ namespace Credit_Management_System.Helpers
             {
                 var adminUser = new Admin
                 {
+                    Name = "Admin",
+                    LastName = "Admin",
                     UserName = "admin",
                     Email = adminEmail,
                     EmailConfirmed = true

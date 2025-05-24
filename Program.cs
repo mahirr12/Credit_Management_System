@@ -36,12 +36,31 @@ builder.Services.AddScoped<IBranchRepository, BranchRepository>();
 //Services
 builder.Services.AddScoped<IMerchantService, MerchantService>();
 builder.Services.AddScoped<IBranchService, BranchService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
+
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+    {
+        
+        context.Request.Path = "/Error/CustomNotFound";
+        context.SetEndpoint(null);
+        await next();
+    }
+});
+
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -60,14 +79,13 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await DbInitializer.SeedRolesAsync(services);
-}
-
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    await DbInitializer.SeedRolesAsync(services);
+//}
 
 app.Run();
 
